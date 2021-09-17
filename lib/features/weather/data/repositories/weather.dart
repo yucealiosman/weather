@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:weather/features/weather/bloc/model.dart';
 import 'package:weather/features/weather/data/remote_data_sources/services.dart';
 
@@ -8,18 +9,18 @@ abstract class WeatherRepository {
 }
 
 class WeatherRepositoryImp implements WeatherRepository {
-  final WeatherService remoteService;
+  final WeatherService service;
 
-  WeatherRepositoryImp({@required this.remoteService})
-      : assert(remoteService != null);
+  WeatherRepositoryImp({@required this.service})
+      : assert(service != null);
 
   @override
   Future<Weather> getWeather({String cityName}) async {
-    return await remoteService.getWeather(cityName);
+    return await service.getWeather(cityName);
   }
 
   @override
   Future<Weather> getWeatherWithLatLong({String lat, String long}) async {
-    return await remoteService.getWeatherWithLatLong(lat, long);
+    return await service.getWeatherWithLatLong(lat, long);
   }
 }

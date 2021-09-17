@@ -44,6 +44,8 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/logo.png
+    - assets/config/local.json
+  
   uses-material-design: true
 
   fonts:

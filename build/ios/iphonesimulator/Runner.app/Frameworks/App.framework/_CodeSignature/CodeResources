@@ -10,7 +10,7 @@
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		oX5wp77H4l8TwDU0TIei/K/x9+Y=
+		LUVS+mypEd6lqQxFl5ZUn2H+zoY=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -19,6 +19,10 @@
 		<key>flutter_assets/NOTICES</key>
 		<data>
 		TYneGl+ozhIwX4IvvXV7AxARbQ0=
+		</data>
+		<key>flutter_assets/assets/config/local.json</key>
+		<data>
+		FfR+SpCfP+JluinkhcJljNkbq4E=
 		</data>
 		<key>flutter_assets/assets/fonts/weathericons.ttf</key>
 		<data>
@@ -38,7 +42,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		uEAIXCk2jTfLT18BYB6turjFcH0=
+		sYhreMFTXfJYfztdCL51hdv0aCo=
 		</data>
 		<key>flutter_assets/vm_snapshot_data</key>
 		<data>
@@ -51,11 +55,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			oX5wp77H4l8TwDU0TIei/K/x9+Y=
+			LUVS+mypEd6lqQxFl5ZUn2H+zoY=
 			</data>
 			<key>hash2</key>
 			<data>
-			v2/BHutsEmtnnivKEpnVjARUZLxvq+UfO9NGbCIVC5w=
+			pH+sFVIx9/1gFpe9OfFDm6ivuQ4Kiw36LTFWSmQxtcM=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -78,6 +82,17 @@
 			<key>hash2</key>
 			<data>
 			RlY+2EpOkh6czV37JU0TTWa1Vh3Z3jqq+BjSrqe5V6s=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/config/local.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			FfR+SpCfP+JluinkhcJljNkbq4E=
+			</data>
+			<key>hash2</key>
+			<data>
+			o19EvCJknMzJbpKyMf9ysds4cEWCiPbOpk0/nsr7nKA=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/fonts/weathericons.ttf</key>
@@ -128,11 +143,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			uEAIXCk2jTfLT18BYB6turjFcH0=
+			sYhreMFTXfJYfztdCL51hdv0aCo=
 			</data>
 			<key>hash2</key>
 			<data>
-			O4IaocRnXD6Cyw9HeEky10iQNAwEA/d7j8Ka53unMpw=
+			DKsq9tBczXUUYfaWXOvFTEMf6ZVJqLgb9eyoH0SYZhM=
 			</data>
 		</dict>
 		<key>flutter_assets/vm_snapshot_data</key>

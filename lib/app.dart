@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 
 
-import 'features/weather/presentation/screens/splash_screen.dart';
+import 'features/base/presentation/screens/splash_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WeatherApp extends StatelessWidget {
@@ -23,7 +23,7 @@ class WeatherApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       home: 
       BlocProvider(
-        create: (context) => WeatherBloc(weatherRepository: WeatherRepositoryImp(remoteService: OpenWeatherService(client: http.Client()))),
+        create: (context) => WeatherBloc(weatherRepository: WeatherRepositoryImp(service: OpenWeatherService(client: http.Client()))),
         child: Splashscreen(),
       ),
     );

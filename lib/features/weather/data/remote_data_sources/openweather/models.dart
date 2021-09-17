@@ -1,24 +1,22 @@
 import 'package:weather/features/weather/bloc/model.dart';
+
 import 'package:meta/meta.dart';
 
-class MetaweatherWeatherModel extends Weather {
-  MetaweatherWeatherModel(
-      {
-      @required String cityName,
+class OpenweatherWeatherModel extends Weather {
+  OpenweatherWeatherModel(
+      {@required String cityName,
       // @required DateTime date,
       @required WeatherConditions weatherCondition,
       @required double temp,
       @required double minTemp,
       @required double maxTemp,
-      double humidity
-      })
-      : super(cityName, weatherCondition, temp, minTemp, maxTemp,
-            humidity);
+      double humidity})
+      : super(cityName, weatherCondition, temp, minTemp, maxTemp, humidity);
 
-  factory MetaweatherWeatherModel.fromJson(dynamic jsonObject) {
-    return MetaweatherWeatherModel(
-      weatherCondition: _mapWeatherCodeToWeatherCondition(
-          jsonObject['weather'][0]['main']),
+  factory OpenweatherWeatherModel.fromJson(dynamic jsonObject) {
+    return OpenweatherWeatherModel(
+      weatherCondition:
+          _mapWeatherCodeToWeatherCondition(jsonObject['weather'][0]['main']),
       minTemp: (jsonObject['main']['temp_min'] as num).toDouble(),
       temp: (jsonObject['main']['temp'] as num).toDouble(),
       maxTemp: (jsonObject['main']['temp_max'] as num).toDouble(),
