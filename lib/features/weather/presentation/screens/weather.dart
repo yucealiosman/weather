@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather/features/weather/bloc/bloc.dart';
-import 'package:weather/features/weather/bloc/event.dart';
+import 'package:weather/features/base/settings_helper.dart';
+import 'package:weather/features/weather/bloc/settings/bloc.dart';
+import 'package:weather/features/weather/bloc/settings/state.dart';
+
+import 'package:weather/features/weather/bloc/weather/bloc.dart';
+import 'package:weather/features/weather/bloc/weather/event.dart';
 import 'package:weather/features/weather/bloc/model.dart';
-import 'package:weather/features/weather/bloc/state.dart';
+import 'package:weather/features/weather/bloc/weather/state.dart';
 import 'package:weather/features/weather/presentation/screens/city_search.dart';
 import 'package:weather/features/weather/presentation/screens/settings.dart';
 import 'package:weather/features/weather/presentation/icons/weather_icons.dart';
@@ -31,8 +35,11 @@ class WeatherScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => SettingsScreen(),
+                    PageRouteBuilder(
+                      pageBuilder: (c, a1, a2) => BlocProvider.value(
+                        value: BlocProvider.of<SettingsBloc>(context),
+                        child: SettingsScreen(),
+                      ),
                     ));
               },
             ),
@@ -52,82 +59,98 @@ class WeatherScreen extends StatelessWidget {
           ],
         ),
         body: Center(
-            child: BlocBuilder<WeatherBloc, WeatherState>(
-                // ignore: missing_return
-                builder: (context, weatherState) {
-          if (weatherState is WeatherStateInitial) {
-            BlocProvider.of<WeatherBloc>(context)
-                .add(WeatherEventSearchCurrentLocation());
-            String message = 'Temperature of your current location will loading';
-            return buildMessageContainer(message);
-          }else if (weatherState is WeatherLocationLoading){
-             String message = 'Temperature of your current location is loading';
-            return buildMessageContainer(message);
-          }
-          else if (weatherState is WeatherCityLoading) {
-            return this.buildCityContainer(weatherState.city);
-          } else if (weatherState is WeatherStateSuccess) {
-            return this.buildColumn(weatherState.weather);
-          }
-          else if (weatherState is WeatherStateFailure) {
-            String message = 'Error occured';
-            return buildMessageContainer(message);
-          }
-        }, 
-        // listener: (context, weatherState) {
-          
-          
-        
-        // }
-        )));
+            child: BlocListener<SettingsBloc, SettingsState>(
+                listener: (context, weatherState) {
+          BlocProvider.of<WeatherBloc>(context)
+              .add(WeatherEventSearchCurrentLocation());
+          String message = 'Temperature of your current location will loading';
+          return buildMessageContainer(message);
+        }, child: BlocBuilder<WeatherBloc, WeatherState>(
+          // ignore: missing_return
+          builder: (context, weatherState) {
+            if (weatherState is WeatherStateInitial) {
+              BlocProvider.of<WeatherBloc>(context)
+                  .add(WeatherEventSearchCurrentLocation());
+              String message =
+                  'Temperature of your current location will loading';
+              return buildMessageContainer(message);
+            } else if (weatherState is WeatherLocationLoading) {
+              String message =
+                  'Temperature of your current location is loading';
+              return buildMessageContainer(message);
+            } else if (weatherState is WeatherCityLoading) {
+              return this.buildCityContainer(weatherState.city);
+            } else if (weatherState is WeatherStateSuccess) {
+              return this.buildColumn(weatherState.weather);
+            } else if (weatherState is WeatherStateFailure) {
+              String message = 'Error occured';
+              return buildMessageContainer(message);
+            }
+          },
+        ))));
   }
 
   Widget buildColumn(Weather weather) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        buildCityContainer(weather.cityName),
-        buildtemperatureContainer(weather.temp),
-        buildweatherConditionContainer(weather.weatherCondition)
-      ],
-    );
+    return Container(
+        padding: EdgeInsets.only(bottom: 150, top: 150),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildCityContainer(weather.cityName),
+            buildtemperatureContainer(weather.temp, weather.tempUnit),
+            buildweatherConditionContainer(weather.weatherCondition)
+          ],
+        ));
   }
 
   Widget buildMessageContainer(String msg) {
     return Container(
-        height: 75.0,
-        padding: const EdgeInsets.all(8.0),
+        // padding: const EdgeInsets.all(8.0),
         child: Text(msg));
   }
 
   Widget buildCityContainer(String city) {
     return Container(
-        height: 75.0,
-        padding: const EdgeInsets.all(8.0),
-        child: Text('Your current location is $city'));
+        // padding: const EdgeInsets.all(8.0),
+        child: Text(
+      '$city',
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+    ));
   }
 
-  Widget buildtemperatureContainer(double temp) {
+  Widget buildtemperatureContainer(double temp, TemperatureUnit tempUnit) {
+    String unit = mapTempUnitToSymbol(tempUnit);
     return Container(
-        width: 250.0,
-        height: 75.0,
-        padding: const EdgeInsets.all(8.0),
-        child: Text('Your current temperature is $temp'));
+        // padding: const EdgeInsets.all(8.0),
+        child: Text(
+      '$temp $unit',
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+    ));
   }
 
   Widget buildweatherConditionContainer(WeatherConditions weatherCondition) {
     String condition = describeEnum(weatherCondition).toUpperCase();
     return Container(
-        height: 100.0,
-        padding: const EdgeInsets.all(8.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Text('Your current temperature is $condition'),
-          Icon(
-            mapWeatherConditiontoIcon[weatherCondition],
-            size: 65.0,
-            color: Colors.purple.shade300,
-          ),
-        ]));
+      Text(
+        '$condition',
+        textAlign: TextAlign.left,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
+      Icon(
+        mapWeatherConditiontoIcon[weatherCondition],
+        size: 50.0,
+        color: Colors.purple.shade300,
+      ),
+    ]));
+  }
+
+  String mapTempUnitToSymbol(TemperatureUnit unit) {
+    Map<TemperatureUnit, String> mapTempUnitToSymbol = {
+      TemperatureUnit.celsius: '°C',
+      TemperatureUnit.kelvin: '°K',
+    };
+    return mapTempUnitToSymbol[unit];
   }
 }

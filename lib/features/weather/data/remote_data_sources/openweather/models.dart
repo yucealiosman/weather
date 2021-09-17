@@ -1,17 +1,19 @@
 import 'package:weather/features/weather/bloc/model.dart';
+import 'package:weather/features/base/settings_helper.dart';
 
 import 'package:meta/meta.dart';
 
 class OpenweatherWeatherModel extends Weather {
   OpenweatherWeatherModel(
       {@required String cityName,
-      // @required DateTime date,
       @required WeatherConditions weatherCondition,
+      TemperatureUnit tempUnit,
       @required double temp,
       @required double minTemp,
       @required double maxTemp,
       double humidity})
-      : super(cityName, weatherCondition, temp, minTemp, maxTemp, humidity);
+      : super(cityName:cityName, weatherCondition:weatherCondition, tempUnit:tempUnit, temp:temp, minTemp:minTemp, maxTemp:maxTemp,
+            humidity:humidity);
 
   factory OpenweatherWeatherModel.fromJson(dynamic jsonObject) {
     return OpenweatherWeatherModel(

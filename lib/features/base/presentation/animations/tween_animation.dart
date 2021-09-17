@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather/features/weather/bloc/bloc.dart';
+import 'package:weather/features/weather/bloc/settings/bloc.dart';
+import 'package:weather/features/weather/bloc/weather/bloc.dart';
 
 import 'package:weather/features/weather/presentation/screens/weather.dart';
 
@@ -52,14 +53,24 @@ class Opacityanimate extends StatelessWidget {
             ),
           );
         },
+        
         onEnd: () {
           Navigator.push(
             context,
             PageRouteBuilder(
-              pageBuilder: (c, a1, a2) => BlocProvider.value(
+              pageBuilder: (c, a1, a2) =>     MultiBlocProvider(
+          providers: [
+           BlocProvider.value(
                 value: BlocProvider.of<WeatherBloc>(context),
                 child: WeatherScreen(),
               ),
+           BlocProvider.value(
+                value: BlocProvider.of<SettingsBloc>(context),
+                child: WeatherScreen(),
+              ),
+          ],
+          child: WeatherScreen(),
+        ),
               transitionsBuilder: (c, anim, a2, child) =>
                   FadeTransition(opacity: anim, child: child),
               transitionDuration: Duration(milliseconds: 1000),
